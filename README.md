@@ -1,9 +1,13 @@
-# Sanity Clean Content Studio
+# Sanity studio for Funkit
 
-Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.
+A website with CMS for the non-profit organisation Funkit in Värmland to easier spread information about their awesome events.
 
-Now you can do the following things:
+---
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the community Slack](https://slack.sanity.io/?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+## To the dev 
+
+You can find the frontend code [here](https://github.com/MonBjo/funkit-frontend).
+
+1. **When updating the Studio exports**, don't forget to check the `src/lib/utils` folder at the frontend and mostly the `sanity.ts` file as that is where all the data is fetched!
+
+2. Make sure the Studio is like a walk in the park.
