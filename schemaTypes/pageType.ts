@@ -11,17 +11,6 @@ export const pageType = defineType({
         type: 'string',
         }),
         defineField({
-            name: 'parentpage',
-            title: 'Ska denna sidan ha undersidor?',
-            type: 'boolean'
-        }),
-        defineField({
-            name: 'subpages',
-            title: 'Under-sidor',
-            type: 'string',
-            description: 'vilka sidor som ska höra ihop och synas i menyn.',
-        }),
-        defineField({
             title: 'Slug',
             name: 'slug',
             type: 'slug',
@@ -34,6 +23,53 @@ export const pageType = defineType({
                     .slice(0, 200)
             },
         }),
+        // defineField({
+        //     name: 'pagerelations',
+        //     title: 'Sidlänkar',
+        //     type: 'object',
+        //     fields: [
+        //         {
+        //             name: 'parentpage',
+        //             title: 'Ska denna sidan ha en egen meny?',
+        //             type: 'boolean'
+        //         },{
+        //             name: "childpage",
+        //             title: "Sidor i menyn",
+        //             type: "reference",
+        //             to: [{ type: "page" }],
+        //             hidden: ({value, document}) => !value && document?.parentpage === false,
+        //             validation: (rule) => 
+        //                 rule.custom((value, context) => {
+        //                     if(value && context?.document?.parentpage === false) {
+        //                         return "Only in-person events can have a venue";
+        //                     }
+        //                     return true;
+        //                 }),
+        //         }
+        //     ]
+        // }),
+        defineField({
+            name: 'parentpage',
+            title: 'Ska denna sidan ha en egen meny?',
+            type: 'boolean'
+        }),
+        defineField({
+            name: 'childpage',
+            title: 'Sidor i menyn',
+            type: 'array',
+            of: [{ 
+                type: 'reference', 
+                to: [{ type: 'page' }]
+            }],
+            hidden: ({value, document}) => !value && document?.parentpage === false,
+        }),
+        // defineField({
+        //     name: "childpage",
+        //     title: "Sidor i menyn",
+        //     type: "reference",
+        //     to: [{ type: "page" }],
+        //     hidden: ({value, document}) => !value && document?.parentpage === false,
+        // }),
         defineField({
             name: 'content',
             title: 'Innehåll', 

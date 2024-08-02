@@ -11,3 +11,5 @@ You can find the frontend code [here](https://github.com/MonBjo/funkit-frontend)
 1. **When updating the Studio exports**, don't forget to check the `src/lib/utils` folder at the frontend and mostly the `sanity.ts` file as that is where all the data is fetched!
 
 2. Make sure the Studio is like a walk in the park.
+
+3. Sanity icons can be found at [icons.sanity.build](https://icons.sanity.build/all).
