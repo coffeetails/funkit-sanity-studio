@@ -9,6 +9,7 @@ export const locationType = defineType({
       name: 'name',
       title: 'Platsnamn',
       type: 'string',
+      validation: (rule) => rule.required(),
     }),
     defineField({
         title: 'Address',
@@ -18,7 +19,8 @@ export const locationType = defineType({
             {
                 name: 'street', 
                 type: 'string', 
-                title: 'Gatunamn'
+                title: 'Gatunamn',
+                validation: (rule) => rule.required(),
             },
             {
                 name: 'zipcode', 
@@ -27,12 +29,14 @@ export const locationType = defineType({
                 validation: (rule) => rule
                     .positive()
                     .integer()
+                    .required()
                     .error("Måste vara ett positivt heltal"),
             },
             {
                 name: 'city', 
                 type: 'string', 
-                title: 'Stad'
+                title: 'Stad',
+                validation: (rule) => rule.required(),
             }
         ]
       }),

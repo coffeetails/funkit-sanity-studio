@@ -1,5 +1,5 @@
 import type { StructureResolver } from "sanity/structure";
-import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon } from "@sanity/icons";
+import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon } from "@sanity/icons";
 
 export const structure: StructureResolver = (S) => 
     S.list()
@@ -21,6 +21,7 @@ export const structure: StructureResolver = (S) =>
             S.documentTypeListItem("venue").title("Venues").icon(PinIcon),
             S.divider(),
             S.divider(),
-            S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             S.documentTypeListItem("page").title("Sidor").icon(DocumentsIcon),
+            S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
+            S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
         ])
