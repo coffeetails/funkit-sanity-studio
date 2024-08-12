@@ -27,12 +27,6 @@ export const pageType = defineType({
                     .replaceAll(/[æÆ]/g, 'ae')
                     .replaceAll(/[åÅäÄ]/g, 'a')
                     .replaceAll(/[öÖøØ]/g, 'o')
-                    // .replaceAll('å', 'a')
-                    // .replaceAll('ä', 'a')
-                    // .replaceAll('ö', 'o')
-                    // .replaceAll('Å', 'a')
-                    // .replaceAll('Ä', 'a')
-                    // .replaceAll('Ö', 'o')
             },
             validation: (rule) => rule.required(),
         }),

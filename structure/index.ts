@@ -1,8 +1,12 @@
 import type { StructureResolver } from "sanity/structure";
-import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, CircleIcon } from "@sanity/icons";
+import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon } from "@sanity/icons";
 
-// TODO: Make a GROQ filter for the pages https://www.sanity.io/docs/dynamically-group-list-items-with-a-groq-filter 
-// TODO: Add a image gallery https://www.sanity.io/guides/how-to-use-structured-content-for-page-building
+// TODO: Make a GROQ filter for the pages to get nice categories in the studio https://www.sanity.io/docs/dynamically-group-list-items-with-a-groq-filter - 1week
+// TODO: Add an image gallery https://www.sanity.io/guides/how-to-use-structured-content-for-page-building - 3days
+// TODO: Add a page builder (link above) to be able to add images to pages - 1week
+// TODO: Add News section - 3days
+// TODO: Add separate document type for events (makes the data more dynamic and easier to work with & spread) - 1week
+// FIXME: Clean up the studio from dev stuff - 1day
 
 export const structure: StructureResolver = (S) => 
     S.list()
@@ -13,7 +17,7 @@ export const structure: StructureResolver = (S) =>
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
             S.divider(),
-            S.listItem().title("Development").icon('CircleIcon')
+            S.listItem().title("Development")
             .child(
                 S.list().title("Dev stuff").items([
                     S.listItem()
