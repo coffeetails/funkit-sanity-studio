@@ -19,9 +19,20 @@ export const pageType = defineType({
                 source: 'title',
                 maxLength: 200, // will be ignored if slugify is set
                 slugify: input => input
-                    .toLowerCase()
-                    .replace(/\s+/g, '-')
                     .slice(0, 200)
+                    .toLowerCase()
+                    .replaceAll(/\s+/g, '-')
+                    .replaceAll(/[\s~`!@#$%^&*(){}\[\];:"'<,.>?\/\\|_+=]/g, '')
+                    .replaceAll(/-{2,}/g, '')
+                    .replaceAll(/[æÆ]/g, 'ae')
+                    .replaceAll(/[åÅäÄ]/g, 'a')
+                    .replaceAll(/[öÖøØ]/g, 'o')
+                    // .replaceAll('å', 'a')
+                    // .replaceAll('ä', 'a')
+                    // .replaceAll('ö', 'o')
+                    // .replaceAll('Å', 'a')
+                    // .replaceAll('Ä', 'a')
+                    // .replaceAll('Ö', 'o')
             },
             validation: (rule) => rule.required(),
         }),
