@@ -1,66 +1,82 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType, SanityClient, SanityDocument, useClient } from 'sanity'
+import { parentSlugify } from './components/ParentSlugify'
 
 export const pageType = defineType({
-  name: 'page',
-  title: 'Sida',
-  type: 'document',
-  fields: [
+    name: 'page',
+    title: 'Sida',
+    type: 'document',
+    fields: [
         defineField({
-        name: 'title',
-        title: 'Title',
-        type: 'string',
-        validation: (rule) => rule.required(),
-    }),
+            name: 'title',
+            title: 'Title',
+            type: 'string',
+            validation: (rule) => rule.required(),
+        }),
         defineField({
             title: 'Slug',
             name: 'slug',
             type: 'slug',
             options: {
-                source: 'title',
                 maxLength: 200, // will be ignored if slugify is set
-                slugify: input => input
-                    .slice(0, 200)
-                    .toLowerCase()
-                    .replaceAll(/\s+/g, '-')
-                    .replaceAll(/[\s~`!@#$%^&*(){}\[\];:"'<,.>?\/\\|_+=]/g, '')
-                    .replaceAll(/-{2,}/g, '')
-                    .replaceAll(/[æÆ]/g, 'ae')
-                    .replaceAll(/[åÅäÄ]/g, 'a')
-                    .replaceAll(/[öÖøØ]/g, 'o')
+                source: 'title',
+                // source: '_id',
+                
+                // slugify: parentSlugify,
+                slugify: async (input) => {
+                    const client = useClient({apiVersion: '2024-01-01'});
+                    
+                    const query = `*[_type=='movie' && references(^._id)]{ 
+                        title,
+                        'parentSlug': page->.slug.current,
+                    }`;
+
+                    // const document = await client.fetch(query, { id: `**${input}`});
+                    const document = await client.fetch(query);
+                    console.log("document", document);
+                    
+                    const {
+                        title,
+                        parentSlug,
+                    } = document;
+                    
+                    return `${parentSlug}/${title}`
+                }
+                
+                // slugify: input => {
+                    
+                //     return input
+                //     .slice(0, 200)
+                //     .toLowerCase()
+                //     .replaceAll(/\s+/g, '-')
+                //     .replaceAll(/[\s~`!@#$%^&*(){}\[\];:"'<,.>?\/\\|_+=]/g, '')
+                //     .replaceAll(/-{2,}/g, '')
+                //     .replaceAll(/[æÆ]/g, 'ae')
+                //     .replaceAll(/[åÅäÄ]/g, 'a')
+                //     .replaceAll(/[öÖøØ]/g, 'o')
+                // }
             },
             validation: (rule) => rule.required(),
         }),
-        // defineField({
-        //     name: 'pagerelations',
-        //     title: 'Sidlänkar',
-        //     type: 'object',
-        //     fields: [
-        //         {
-        //             name: 'parentpage',
-        //             title: 'Ska denna sidan ha en egen meny?',
-        //             type: 'boolean'
-        //         },{
-        //             name: "childpage",
-        //             title: "Sidor i menyn",
-        //             type: "reference",
-        //             to: [{ type: "page" }],
-        //             hidden: ({value, document}) => !value && document?.parentpage === false,
-        //             validation: (rule) => 
-        //                 rule.custom((value, context) => {
-        //                     if(value && context?.document?.parentpage === false) {
-        //                         return "Only in-person events can have a venue";
-        //                     }
-        //                     return true;
-        //                 }),
-        //         }
-        //     ]
-        // }),
         defineField({
-            name: 'parentpage',
+            name: 'parentReference',
+            title: 'isParentPage:',
+            // readOnly: true,
+            type: 'reference', 
+            to: [{ type: 'page' }],
+            // initialValue: ,
+            hidden: ({value, document}) => {
+                console.log("value", value);
+                console.log("document", document);
+                return false;
+            },
+        }),
+        defineField({
+            name: 'isParentPage',
             title: 'Ska denna sidan ha en egen meny?',
             type: 'boolean',
             initialValue: true,
             validation: (rule) => rule.required(),
+            
         }),
         defineField({
             name: 'childpage',
@@ -70,14 +86,14 @@ export const pageType = defineType({
                 type: 'reference', 
                 to: [{ type: 'page' }]
             }],
-            hidden: ({value, document}) => !value && document?.parentpage === false,
+            hidden: ({value, document}) => !value && document?.isParentPage === false,
         }),
         // defineField({
         //     name: "childpage",
         //     title: "Sidor i menyn",
         //     type: "reference",
         //     to: [{ type: "page" }],
-        //     hidden: ({value, document}) => !value && document?.parentpage === false,
+        //     hidden: ({value, document}) => !value && document?.isParentPage === false,
         // }),
         defineField({
             name: 'content',
@@ -89,3 +105,7 @@ export const pageType = defineType({
         }),
     ],
 })
+
+function get(doc: SanityDocument, arg1: string) {
+    throw new Error('Function not implemented.')
+}
