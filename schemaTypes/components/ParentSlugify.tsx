@@ -1,17 +1,26 @@
-export async function parentSlugify(_input_: any) {
-    const parentQuery = '*[_id == $id][0]';
-    const parentQueryParams = { id: _input_.doc.parent?._ref || '', }
+export async function parentSlugify(input: any) {
+    //@ts-nocheck
 
-    const parent = await client.fetch(parentQuery, parentQueryParams)
+    console.log("input",input);
 
-    const parentSlug = parent?.slug?.current ? parent.slug.current : ''
+    // ERROR: input.doc is undefined
 
-    const pageSlug = _input_.doc.title.toLowerCase().replace(/\s+/g, '-').slice(0, 200)
-
-    if (!parentSlug) {
-        return slugify(pageSlug)
+    const parentQuery = '*[_id == $id][0]'
+    const parentQueryParams = {
+        id: input.doc.parent?._ref || '',
     }
 
-    `return `${slugify(parentSlug)}/${slugify(pageSlug)}``
+    console.log("parentQuery", parentQuery);
+    console.log("parentQueryParams", parentQueryParams);
 
+    const parent = await client.fetch(parentQuery, parentQueryParams);
+    const parentSlug = parent?.slug?.current ? parent.slug.current : '';
+    console.log("parentSlug", parentSlug);
+    const pageSlug = input.doc.title.toLowerCase().replace(/\s+/g, '-').slice(0, 200); // standard slug prep
+    console.log("pageSlug", pageSlug);
+    
+    if (!parentSlug) {
+        return slugify(pageSlug);
+    }
+    return `${slugify(parentSlug)}/${slugify(pageSlug)}`;
 }

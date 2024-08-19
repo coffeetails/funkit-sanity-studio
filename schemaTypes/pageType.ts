@@ -1,5 +1,6 @@
 import { defineField, defineType, SanityClient, SanityDocument, useClient } from 'sanity'
 import { parentSlugify } from './components/ParentSlugify'
+import { MyCustomStringInput } from './components/MyCustomStringInput'
 
 export const pageType = defineType({
     name: 'page',
@@ -18,33 +19,22 @@ export const pageType = defineType({
             type: 'slug',
             options: {
                 maxLength: 200, // will be ignored if slugify is set
-                source: 'title',
-                // source: '_id',
-                
-                // slugify: parentSlugify,
-                slugify: async (input) => {
-                    const client = useClient({apiVersion: '2024-01-01'});
-                    
-                    const query = `*[_type=='movie' && references(^._id)]{ 
-                        title,
-                        'parentSlug': page->.slug.current,
-                    }`;
-
-                    // const document = await client.fetch(query, { id: `**${input}`});
-                    const document = await client.fetch(query);
+                source: async (document, {getClient}) => {
                     console.log("document", document);
                     
                     const {
-                        title,
-                        parentSlug,
+                      parentPage: {_ref},
+                      title,
                     } = document;
-                    
-                    return `${parentSlug}/${title}`
-                }
-                
-                // slugify: input => {
-                    
-                //     return input
+                    const client = getClient({apiVersion: '2024-08-19'});
+                    const parentSlug = await client.fetch(`*[_id == $id][0].slug.current`, {id: _ref});
+                    // return [parentSlug, slugify(title, {lower: true})];
+                    return [parentSlug, title];
+                  },
+                  slugify: (source) => source.join('/')
+                // source: 'title',
+                // slugify: parentSlugify,
+                // slugify: input => input
                 //     .slice(0, 200)
                 //     .toLowerCase()
                 //     .replaceAll(/\s+/g, '-')
@@ -53,22 +43,14 @@ export const pageType = defineType({
                 //     .replaceAll(/[æÆ]/g, 'ae')
                 //     .replaceAll(/[åÅäÄ]/g, 'a')
                 //     .replaceAll(/[öÖøØ]/g, 'o')
-                // }
             },
             validation: (rule) => rule.required(),
         }),
         defineField({
-            name: 'parentReference',
-            title: 'isParentPage:',
-            // readOnly: true,
+            name: 'parentPage',
+            title: 'Parent page',
             type: 'reference', 
-            to: [{ type: 'page' }],
-            // initialValue: ,
-            hidden: ({value, document}) => {
-                console.log("value", value);
-                console.log("document", document);
-                return false;
-            },
+            to: [{ type: 'page' }]
         }),
         defineField({
             name: 'isParentPage',
@@ -76,7 +58,6 @@ export const pageType = defineType({
             type: 'boolean',
             initialValue: true,
             validation: (rule) => rule.required(),
-            
         }),
         defineField({
             name: 'childpage',
@@ -88,13 +69,6 @@ export const pageType = defineType({
             }],
             hidden: ({value, document}) => !value && document?.isParentPage === false,
         }),
-        // defineField({
-        //     name: "childpage",
-        //     title: "Sidor i menyn",
-        //     type: "reference",
-        //     to: [{ type: "page" }],
-        //     hidden: ({value, document}) => !value && document?.isParentPage === false,
-        // }),
         defineField({
             name: 'content',
             title: 'Innehåll', 
