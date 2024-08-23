@@ -1,6 +1,7 @@
 import { defineField, defineType, SanityClient, SanityDocument, useClient } from 'sanity'
-import { parentSlugify } from './components/ParentSlugify'
+import { parentSlugify, Slugifyer } from './components/Slugifyer'
 import { MyCustomStringInput } from './components/MyCustomStringInput'
+import { GetSlugSource } from './components/GetSlugSource'
 
 export const pageType = defineType({
     name: 'page',
@@ -18,37 +19,15 @@ export const pageType = defineType({
             name: 'slug',
             type: 'slug',
             options: {
-                maxLength: 200, // will be ignored if slugify is set
-                source: async (document, {getClient}) => {
-                    console.log("document", document);
-                    
-                    const {
-                      parentPage: {_ref},
-                      title,
-                    } = document;
-                    const client = getClient({apiVersion: '2024-08-19'});
-                    const parentSlug = await client.fetch(`*[_id == $id][0].slug.current`, {id: _ref});
-                    // return [parentSlug, slugify(title, {lower: true})];
-                    return [parentSlug, title];
-                  },
-                  slugify: (source) => source.join('/')
-                // source: 'title',
-                // slugify: parentSlugify,
-                // slugify: input => input
-                //     .slice(0, 200)
-                //     .toLowerCase()
-                //     .replaceAll(/\s+/g, '-')
-                //     .replaceAll(/[\s~`!@#$%^&*(){}\[\];:"'<,.>?\/\\|_+=]/g, '')
-                //     .replaceAll(/-{2,}/g, '')
-                //     .replaceAll(/[æÆ]/g, 'ae')
-                //     .replaceAll(/[åÅäÄ]/g, 'a')
-                //     .replaceAll(/[öÖøØ]/g, 'o')
+                source: GetSlugSource,
+                slugify: input => input,
             },
             validation: (rule) => rule.required(),
         }),
         defineField({
             name: 'parentPage',
-            title: 'Parent page',
+            title: 'Översida',
+            description: "Vilken sida ska denna synas som menyval hos?",
             type: 'reference', 
             to: [{ type: 'page' }]
         }),
