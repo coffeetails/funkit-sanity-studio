@@ -29,24 +29,10 @@ export const pageType = defineType({
             title: 'Översida',
             description: "Vilken sida ska denna synas som menyval hos?",
             type: 'reference', 
-            to: [{ type: 'page' }]
-        }),
-        defineField({
-            name: 'isParentPage',
-            title: 'Ska denna sidan ha en egen meny?',
-            type: 'boolean',
-            initialValue: true,
-            validation: (rule) => rule.required(),
-        }),
-        defineField({
-            name: 'childpage',
-            title: 'Sidor i menyn',
-            type: 'array',
-            of: [{ 
-                type: 'reference', 
-                to: [{ type: 'page' }]
-            }],
-            hidden: ({value, document}) => !value && document?.isParentPage === false,
+            to: [{ type: 'page' }],
+            options: {
+                disableNew: true,
+            }
         }),
         defineField({
             name: 'content',
