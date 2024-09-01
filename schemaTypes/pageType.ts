@@ -1,6 +1,4 @@
-import { defineField, defineType, SanityClient, SanityDocument, useClient } from 'sanity'
-import { parentSlugify, Slugifyer } from './components/Slugifyer'
-import { MyCustomStringInput } from './components/MyCustomStringInput'
+import { defineField, defineType, SanityDocument } from 'sanity'
 import { GetSlugSource } from './components/GetSlugSource'
 
 export const pageType = defineType({
@@ -43,6 +41,21 @@ export const pageType = defineType({
             validation: (rule) => rule.required(),
         }),
     ],
+    preview: {
+        select: {
+            title: 'title',
+            parentPage: 'parentPage.title',
+        },
+        prepare({title, parentPage}) {
+           console.log("parentPage", parentPage);
+           
+        
+            return {
+                title: title,
+                subtitle: parentPage ? `Meny under ${parentPage}` : ``
+            }
+        },
+    },
 })
 
 function get(doc: SanityDocument, arg1: string) {
