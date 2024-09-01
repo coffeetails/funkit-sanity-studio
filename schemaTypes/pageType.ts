@@ -17,6 +17,7 @@ export const pageType = defineType({
             name: 'slug',
             type: 'slug',
             options: {
+                // TODO: When it works, why error, hmmm?
                 source: GetSlugSource,
                 slugify: input => input,
             },
