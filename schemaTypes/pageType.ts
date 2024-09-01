@@ -1,11 +1,14 @@
 import { defineField, defineType, SanityDocument } from 'sanity'
 import { GetSlugSource } from './components/GetSlugSource'
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 
 export const pageType = defineType({
     name: 'page',
     title: 'Sida',
     type: 'document',
+    orderings: [orderRankOrdering],
     fields: [
+        orderRankField({ type: "page" }),
         defineField({
             name: 'title',
             title: 'Title',

@@ -1,5 +1,6 @@
 import type { StructureResolver } from "sanity/structure";
 import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon } from "@sanity/icons";
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list';
 // import client from 'part:@sanity/base/client';
 
 
@@ -9,12 +10,29 @@ import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon } from "@san
 // TODO: Add separate document type for events (makes the data more dynamic and easier to work with & spread) - 1week
 // TODO: Clean up the studio from dev stuff - 1day
 
-export const structure: StructureResolver = (S) => 
+export const structure: StructureResolver = (S, context) => 
     S.list()
         .id("root")
         .title("Kategorier")
         .items([
-            S.documentTypeListItem("page").title("Sidor").icon(DocumentsIcon),
+            orderableDocumentListDeskItem({
+                type: 'page',
+                title: 'Pages',
+                icon: DocumentsIcon,
+                // Required if using multiple lists of the same 'type'
+                // id: 'orderable-en-projects',
+                // See notes on adding a `filter` below
+                // filter: `__i18n_lang == $lang`,
+                // params: {
+                //   lang: 'en_US',
+                // },
+                createIntent: false, // do not add an option for item creation
+                menuItems: [], // allow an array of `S.menuItem()` to be injected to orderable document list menu
+                // pass from the structure callback params above
+                S,
+                context,
+            }),
+            // S.documentTypeListItem("page").title("Sidor").icon(DocumentsIcon),
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
             S.divider(),
