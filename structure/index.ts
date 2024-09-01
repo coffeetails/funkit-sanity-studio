@@ -17,7 +17,7 @@ export const structure: StructureResolver = (S, context) =>
         .items([
             orderableDocumentListDeskItem({
                 type: 'page',
-                title: 'Pages',
+                title: 'Sidor',
                 icon: DocumentsIcon,
                 // Required if using multiple lists of the same 'type'
                 // id: 'orderable-en-projects',
