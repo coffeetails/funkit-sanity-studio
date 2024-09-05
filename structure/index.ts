@@ -1,5 +1,5 @@
 import type { StructureResolver } from "sanity/structure";
-import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon } from "@sanity/icons";
+import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon } from "@sanity/icons";
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list';
 // import client from 'part:@sanity/base/client';
 
@@ -33,6 +33,7 @@ export const structure: StructureResolver = (S, context) =>
                 context,
             }),
             // S.documentTypeListItem("page").title("Sidor").icon(DocumentsIcon),
+            S.documentTypeListItem("news").title("Nyheter").icon(BellIcon),
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
             S.divider(),
