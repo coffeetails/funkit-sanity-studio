@@ -6,7 +6,6 @@ import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list';
 
 // TODO: Add an image gallery https://www.sanity.io/guides/how-to-use-structured-content-for-page-building - 3days
 // TODO: Add a page builder (link above) to be able to add images to pages - 1week
-// TODO: Add News section - 3days
 // TODO: Add separate document type for events (makes the data more dynamic and easier to work with & spread) - 1week
 // TODO: Clean up the studio from dev stuff - 1day
 
@@ -32,8 +31,8 @@ export const structure: StructureResolver = (S, context) =>
                 S,
                 context,
             }),
-            // S.documentTypeListItem("page").title("Sidor").icon(DocumentsIcon),
             S.documentTypeListItem("news").title("Nyheter").icon(BellIcon),
+            S.divider(),
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
             S.divider(),

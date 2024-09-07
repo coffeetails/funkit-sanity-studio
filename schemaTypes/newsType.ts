@@ -34,10 +34,12 @@ export const newsType = defineType({
         }),
         {
             name: 'images',
+            title: 'Bilder',
             type: 'array',
             of: [
                 defineField({
                     name: 'image',
+                    title: 'Bild',
                     type: 'image',
                     options: {hotspot: true},
                     fields: [
@@ -47,8 +49,22 @@ export const newsType = defineType({
                             title: 'Alternativ text för skärmläsare',
                         },
                         {
-                            name: 'position',
-                            title: 'Bildens position',
+                            name: 'positionHorizontal',
+                            title: 'Horizontal position',
+                            type: 'array',
+                            of: [{type: "string"}],
+                            options: {
+                                list: [
+                                    {title: "Till höger", value: "right"},
+                                    {title: "Till vänster", value: "left"},
+                                    {title: "Centrerad", value: "center"}
+                                ]
+                            },
+                            validation: (rule) => rule.max(1),
+                        },
+                        {
+                            name: 'positionVertical',
+                            title: 'Vertikal position',
                             type: 'array',
                             of: [{type: "string"}],
                             options: {
@@ -56,11 +72,9 @@ export const newsType = defineType({
                                     {title: "Högst upp", value: "top"},
                                     {title: "Mitten", value: "middle"},
                                     {title: "Längst ner", value: "bottom"},
-                                    {title: "Till höger", value: "right"},
-                                    {title: "Till vänster", value: "left"},
-                                    {title: "Centrerad", value: "center"}
                                 ]
-                            }
+                            },
+                            validation: (rule) => rule.max(1),
                         },
                     ],
                 }),
