@@ -4,7 +4,7 @@ import { venueType } from "./venueType";
 import { locationType } from "./locationType";
 import { pageType } from "./pageType";
 import { sponsorType } from "./sponsorType";
-import { newsType } from "./newsType";
+import { updatesType } from "./updatesType";
 
 export const schemaTypes = [
     eventType,
@@ -13,5 +13,5 @@ export const schemaTypes = [
     locationType,
     pageType,
     sponsorType,
-    newsType
+    updatesType
 ];

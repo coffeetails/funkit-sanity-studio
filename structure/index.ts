@@ -31,7 +31,7 @@ export const structure: StructureResolver = (S, context) =>
                 S,
                 context,
             }),
-            S.documentTypeListItem("news").title("Nyheter").icon(BellIcon),
+            S.documentTypeListItem("updates").title("Uppdateringar").icon(BellIcon),
             S.divider(),
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
