@@ -25,7 +25,7 @@ export const structure: StructureResolver = (S, context) =>
                 // params: {
                 //   lang: 'en_US',
                 // },
-                createIntent: false, // do not add an option for item creation
+                createIntent: true, // do not add an option for item creation
                 menuItems: [], // allow an array of `S.menuItem()` to be injected to orderable document list menu
                 // pass from the structure callback params above
                 S,
