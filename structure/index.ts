@@ -34,7 +34,24 @@ export const structure: StructureResolver = (S, context) =>
             S.documentTypeListItem("updates").title("Uppdateringar").icon(BellIcon),
             S.divider(),
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
-            S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
+            orderableDocumentListDeskItem({
+                type: 'sponsor',
+                title: 'Sponsorer',
+                icon: HeartIcon,
+                // Required if using multiple lists of the same 'type'
+                // id: 'orderable-en-projects',
+                // See notes on adding a `filter` below
+                // filter: `__i18n_lang == $lang`,
+                // params: {
+                //   lang: 'en_US',
+                // },
+                createIntent: true, // do not add an option for item creation
+                menuItems: [], // allow an array of `S.menuItem()` to be injected to orderable document list menu
+                // pass from the structure callback params above
+                S,
+                context,
+            }),
+            // S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
             S.divider(),
             S.listItem().title("Development")
             .child(

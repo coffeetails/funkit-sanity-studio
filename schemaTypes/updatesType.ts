@@ -36,6 +36,7 @@ export const updatesType = defineType({
             name: 'images',
             title: 'Bilder',
             type: 'array',
+            description: "EJ IMPLEMENTERAD",
             of: [
                 defineField({
                     name: 'image',
@@ -92,8 +93,26 @@ export const updatesType = defineType({
             validation: (rule) => rule.required(),
         }),
     ],
-   
+    preview: {
+        select: {
+            title: 'title',
+            created: '_createdAt',
+        },
+        prepare({title, created}) {
+
+            return {
+                title: title,
+                subtitle: `Publicerad: ${parseDate(created)}`
+            }
+        },
+    },
 })
+
+function parseDate(rawDate: string | number | Date) {
+    let date = new Date(rawDate);
+    let displayDate = `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)} kl${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
+    return displayDate;
+}
 
 function get(doc: SanityDocument, arg1: string) {
     throw new Error('Function not implemented.')
