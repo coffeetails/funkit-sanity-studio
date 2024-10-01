@@ -5,6 +5,8 @@ import { locationType } from "./locationType";
 import { pageType } from "./pageType";
 import { sponsorType } from "./sponsorType";
 import { updatesType } from "./updatesType";
+import { settingsType } from "./settingsType";
+import { galleryType } from "./galleryType";
 
 export const schemaTypes = [
     eventType,
@@ -13,5 +15,7 @@ export const schemaTypes = [
     locationType,
     pageType,
     sponsorType,
-    updatesType
+    updatesType,
+    settingsType,
+    galleryType
 ];

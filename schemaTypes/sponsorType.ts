@@ -10,10 +10,10 @@ export const sponsorType = defineType({
     fields: [
         orderRankField({ type: "sponsor" }),
         defineField({
-        name: 'name',
-        title: 'Sponsornamn',
-        type: 'string',
-        validation: (rule) => rule.required(),
+            name: 'name',
+            title: 'Sponsornamn',
+            type: 'string',
+            validation: (rule) => rule.required(),
         }),
         defineField({
             name: 'link',

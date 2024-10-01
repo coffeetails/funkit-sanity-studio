@@ -1,13 +1,12 @@
 import type { StructureResolver } from "sanity/structure";
-import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon } from "@sanity/icons";
+import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon, CogIcon } from "@sanity/icons";
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list';
 // import client from 'part:@sanity/base/client';
 
-
+// TODO: ? Gallery carousel to add on frontend https://www.sanity.io/schemas/image-gallery-dea386ba
 // TODO: Add an image gallery https://www.sanity.io/guides/how-to-use-structured-content-for-page-building - 3days
 // TODO: Add a page builder (link above) to be able to add images to pages - 1week
 // TODO: Add separate document type for events (makes the data more dynamic and easier to work with & spread) - 1week
-// TODO: Add metadata/settings/options page
 
 export const structure: StructureResolver = (S, context) => 
     S.list()
@@ -34,6 +33,7 @@ export const structure: StructureResolver = (S, context) =>
             S.documentTypeListItem("updates").title("Uppdateringar").icon(BellIcon),
             S.divider(),
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
+            // S.documentTypeListItem("gallery").title("Bilder").icon(PinIcon),
             orderableDocumentListDeskItem({
                 type: 'sponsor',
                 title: 'Sponsorer',
@@ -51,7 +51,8 @@ export const structure: StructureResolver = (S, context) =>
                 S,
                 context,
             }),
-            // S.documentTypeListItem("sponsor").title("Sponsorer").icon(HeartIcon),
+            S.divider(),
+            S.documentTypeListItem("settings").title("Inställningar").icon(CogIcon),
             S.divider(),
             S.listItem().title("Development")
             .child(
