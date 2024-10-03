@@ -34,6 +34,13 @@ export const settingsType = defineType({
             group: ['metadata'],
         }),
         defineField({
+            name: 'domain',
+            title: 'Domännamn',
+            description: 'Exempel: google.com eller solaris.kaffekod.nu',
+            type: 'string',
+            group: ['metadata'],
+        }),
+        defineField({
             name: 'themeColor',
             title: 'Accentfärg',
             type: 'color',
@@ -55,6 +62,13 @@ export const settingsType = defineType({
             title: 'Stor thumbnail',
             type: 'boolean',
             validation: (rule) => rule.required(),
+            group: ['metadata'],
+        }),
+        defineField({
+            name: 'twittername',
+            title: 'Twitter / X användarnamn',
+            description: "Om ni inte har twitterkonto så ska detta fält lämnas tomt",
+            type: 'string',
             group: ['metadata'],
         }),
         defineField({
@@ -93,10 +107,11 @@ export const settingsType = defineType({
                         myIcon: 'myIcon',
                     },
                     prepare({title, link, myIcon}) {
+                        
                         return {
-                            title: title,
-                            subtitle: link,
-                            media: <Icon icon={myIcon.name as string} style={{ fontSize: '48px' }} />,
+                            title: title ? title : "Tom",
+                            subtitle: link ? link : "",
+                            media: myIcon ? <Icon icon={myIcon.name as string} style={{ fontSize: '48px' }} /> : "",
                         }
                     },
                 },
