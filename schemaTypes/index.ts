@@ -1,6 +1,6 @@
-import { eventType } from "./eventType";
-import { artistType } from "./artistType";
-import { venueType } from "./venueType";
+import { eventType } from "./dormant/eventType";
+import { artistType } from "./dormant/artistType";
+import { venueType } from "./dormant/venueType";
 import { locationType } from "./locationType";
 import { pageType } from "./pageType";
 import { sponsorType } from "./sponsorType";

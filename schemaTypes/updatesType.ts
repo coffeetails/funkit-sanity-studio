@@ -1,10 +1,13 @@
 import { defineField, defineType, SanityDocument } from 'sanity';
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 
 export const updatesType = defineType({
     name: 'updates',
     title: 'Uppdateringar',
     type: 'document',
+    orderings: [orderRankOrdering],
     fields: [
+        orderRankField({ type: "updates", newItemPosition: "before" }),
         defineField({
             name: 'title',
             title: 'Rubrik',
@@ -15,7 +18,6 @@ export const updatesType = defineType({
             name: "slug",
             title: "Slug",
             type: "slug",
-            // hidden: ({document}) => !document?.name,
             validation: (rule) => rule
                 .required()
                 .error("required to generate a page on the website"),
@@ -33,10 +35,10 @@ export const updatesType = defineType({
             },
         }),
         {
-            name: 'images',
+            name: 'imagesTop',
             title: 'Bilder',
             type: 'array',
-            description: "EJ IMPLEMENTERAD",
+            description: "Lägg till bilder som du vill ska visas på toppen av innehållet",
             of: [
                 defineField({
                     name: 'image',
@@ -46,33 +48,20 @@ export const updatesType = defineType({
                     fields: [
                         {
                             name: 'alt',
-                            type: 'string',
                             title: 'Alternativ text för skärmläsare',
+                            type: 'string',
                         },
                         {
-                            name: 'positionHorizontal',
-                            title: 'Horizontal position',
+                            name: 'position',
+                            title: 'Position',
                             type: 'array',
+                            description: "Välj bilden/ernas position, om du väljer till höger eller vänster så tar den ca halva bredden, väljer du centrerad så tar den hela bredden och hamnar över dom mindre bilderna, om du väljer att ha både och.",
                             of: [{type: "string"}],
                             options: {
                                 list: [
                                     {title: "Till höger", value: "right"},
                                     {title: "Till vänster", value: "left"},
                                     {title: "Centrerad", value: "center"}
-                                ]
-                            },
-                            validation: (rule) => rule.max(1),
-                        },
-                        {
-                            name: 'positionVertical',
-                            title: 'Vertikal position',
-                            type: 'array',
-                            of: [{type: "string"}],
-                            options: {
-                                list: [
-                                    {title: "Högst upp", value: "top"},
-                                    {title: "Mitten", value: "middle"},
-                                    {title: "Längst ner", value: "bottom"},
                                 ]
                             },
                             validation: (rule) => rule.max(1),
@@ -92,17 +81,46 @@ export const updatesType = defineType({
             description: 'Sidans innehåll. Obs, det är för närvarande en bug (aug 2024) som gör att det inte går att copy-pastea i firefox.',
             validation: (rule) => rule.required(),
         }),
+        {
+            name: 'imagesBottom',
+            title: 'Bilder',
+            type: 'array',
+            description: "Lägg till bilder som du vill ska visas på botten av innehållet",
+            of: [
+                defineField({
+                    name: 'image',
+                    title: 'Bild',
+                    type: 'image',
+                    options: {hotspot: true},
+                    fields: [
+                        {
+                            name: 'alt',
+                            title: 'Alternativ text för skärmläsare',
+                            type: 'string',
+                        },
+                    ],
+                }),
+            ],
+            options: {
+                layout: 'grid',
+            },
+        },
     ],
     preview: {
         select: {
             title: 'title',
-            created: '_createdAt',
+            updated: '_updatedAt',
+            id: '_id' 
         },
-        prepare({title, created}) {
-
+        prepare({title, updated, id}) {
+            let draft = false;
+            if(id.slice(0,6) == "drafts") {
+                draft = true;
+            }
+            
             return {
                 title: title,
-                subtitle: `Publicerad: ${parseDate(created)}`
+                subtitle: `${parseDate(updated)} ${draft ? "✏️ Utkast" : "📄 Publicerad"}`
             }
         },
     },

@@ -17,20 +17,21 @@ export const structure: StructureResolver = (S, context) =>
                 type: 'page',
                 title: 'Sidor',
                 icon: DocumentsIcon,
-                // Required if using multiple lists of the same 'type'
-                // id: 'orderable-en-projects',
-                // See notes on adding a `filter` below
-                // filter: `__i18n_lang == $lang`,
-                // params: {
-                //   lang: 'en_US',
-                // },
-                createIntent: true, // do not add an option for item creation
-                menuItems: [], // allow an array of `S.menuItem()` to be injected to orderable document list menu
-                // pass from the structure callback params above
+                createIntent: true,
+                menuItems: [],
                 S,
                 context,
             }),
-            S.documentTypeListItem("updates").title("Uppdateringar").icon(BellIcon),
+            // S.documentTypeListItem("updates").title("Uppdateringar").icon(BellIcon),
+            orderableDocumentListDeskItem({
+                type: 'updates',
+                title: 'Uppdateringar',
+                icon: BellIcon,
+                createIntent: true,
+                menuItems: [],
+                S,
+                context,
+            }),
             S.divider(),
             S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             // S.documentTypeListItem("gallery").title("Bilder").icon(PinIcon),
