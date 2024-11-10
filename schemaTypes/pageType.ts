@@ -16,25 +16,26 @@ export const pageType = defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: 'parentPage',
+            title: 'Översida',
+            description: "Vilken sida ska denna synas som menyval hos? Glöm inte att uppdatera slugen",
+            type: 'reference', 
+            to: [{ type: 'page' }],
+            options: {
+                disableNew: true,
+            }
+        }),
+        defineField({
             title: 'Slug',
             name: 'slug',
             type: 'slug',
+            description: 'Stämmer slugen med menyn sidan finns hos?',
             options: {
                 // TODO: When it works, why error, hmmm?
                 source: GetSlugSource,
                 slugify: input => input,
             },
             validation: (rule) => rule.required(),
-        }),
-        defineField({
-            name: 'parentPage',
-            title: 'Översida',
-            description: "Vilken sida ska denna synas som menyval hos?",
-            type: 'reference', 
-            to: [{ type: 'page' }],
-            options: {
-                disableNew: true,
-            }
         }),
         {
             name: 'imagesTop',
