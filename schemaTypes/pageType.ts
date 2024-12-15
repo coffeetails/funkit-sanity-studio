@@ -115,8 +115,6 @@ export const pageType = defineType({
             parentPage: 'parentPage.title',
         },
         prepare({title, parentPage}) {
-           console.log("parentPage", parentPage);
-           
         
             return {
                 title: title,
