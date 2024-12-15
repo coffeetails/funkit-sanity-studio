@@ -3,10 +3,11 @@ import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon, C
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list';
 // import client from 'part:@sanity/base/client';
 
-// TODO: ? Gallery carousel to add on frontend https://www.sanity.io/schemas/image-gallery-dea386ba
 // TODO: Add an image gallery https://www.sanity.io/guides/how-to-use-structured-content-for-page-building - 3days
 // TODO: Add a page builder (link above) to be able to add images to pages - 1week
 // TODO: Add separate document type for events (makes the data more dynamic and easier to work with & spread) - 1week
+
+
 
 export const structure: StructureResolver = (S, context) => 
     S.list()
