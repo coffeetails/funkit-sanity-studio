@@ -1,5 +1,6 @@
 import {defineField, defineType, PreviewProps} from 'sanity';
 import { Icon } from '@iconify/react';
+import { RedirectLinkInput } from './components/RedirectLink';
 
 export const settingsType = defineType({
     name: 'settings',
@@ -35,18 +36,24 @@ export const settingsType = defineType({
                         title: 'Social media',
                         name: 'title',
                         type: 'string',
+                        description: "Namnet på sociala medien som ska länkas till. Detta blir också en del av omdirigeringslänken",
                         validation: (rule) => rule.required(),
+                        components: {
+                            input: RedirectLinkInput,
+                        }
                     },
                     {
                         title: 'Länk',
                         name: 'link',
                         type: 'string',
+                        description: "Länken till sociala mediet, det är hit både ikonen i menyn och omdirigeringen kommer leda",
                         validation: (rule) => rule.required(),
                     },
                     {
                         name: 'myIcon',
                         title: 'Ikon',
                         type: 'icon',
+                        description: "Välj ikon som ska synas i menyn",
                         validation: (rule) => rule.required(),
                     },
                 ],
