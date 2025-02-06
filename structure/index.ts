@@ -34,7 +34,6 @@ export const structure: StructureResolver = (S, context) =>
                 context,
             }),
             S.divider(),
-            S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             // S.documentTypeListItem("gallery").title("Bilder").icon(PinIcon),
             orderableDocumentListDeskItem({
                 type: 'sponsor',
@@ -72,6 +71,7 @@ export const structure: StructureResolver = (S, context) =>
                     S.divider(),
                     S.documentTypeListItem("artist").title("Artists").icon(UsersIcon),
                     S.documentTypeListItem("venue").title("Venues").icon(PinIcon),
+                    S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
                 ])
             ),
         ])
