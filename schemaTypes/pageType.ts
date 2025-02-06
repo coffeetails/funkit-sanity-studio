@@ -1,4 +1,4 @@
-import { defineField, defineType, SanityDocument } from 'sanity'
+import { defineField, defineArrayMember, defineType, SanityDocument } from 'sanity'
 import { GetSlugSource } from './components/GetSlugSource'
 import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 
@@ -83,6 +83,20 @@ export const pageType = defineType({
             of: [{type: 'block'}],
             description: 'Sidans innehåll. Obs, det är för närvarande en bug (aug 2024) som gör att det inte går att copy-pastea i firefox.',
             validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'pageBuilder',
+            title: 'Artist Alley',
+            type: 'array',
+            of: [
+                {
+                    type: 'reference',
+                    to: [
+                        {type: 'artistAlley'}
+                        // etc...
+                    ]
+                }
+            ],
         }),
         {
             name: 'imagesBottom',

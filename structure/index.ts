@@ -1,7 +1,9 @@
 import type { StructureResolver } from "sanity/structure";
-import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon, CogIcon } from "@sanity/icons";
+import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon, CogIcon, DiamondIcon } from "@sanity/icons";
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list';
 // import client from 'part:@sanity/base/client';
+
+// https://icons.sanity.build/all
 
 // TODO: Add an image gallery https://www.sanity.io/guides/how-to-use-structured-content-for-page-building - 3days
 // TODO: Add a page builder (link above) to be able to add images to pages - 1week
@@ -33,7 +35,6 @@ export const structure: StructureResolver = (S, context) =>
                 S,
                 context,
             }),
-            S.divider(),
             // S.documentTypeListItem("gallery").title("Bilder").icon(PinIcon),
             orderableDocumentListDeskItem({
                 type: 'sponsor',
@@ -52,8 +53,26 @@ export const structure: StructureResolver = (S, context) =>
                 S,
                 context,
             }),
-            S.divider(),
+            orderableDocumentListDeskItem({
+                type: 'artistAlley',
+                title: 'Artist Alley',
+                icon: DiamondIcon,
+                // Required if using multiple lists of the same 'type'
+                // id: 'orderable-en-projects',
+                // See notes on adding a `filter` below
+                // filter: `__i18n_lang == $lang`,
+                // params: {
+                //   lang: 'en_US',
+                // },
+                createIntent: true, // do not add an option for item creation
+                menuItems: [], // allow an array of `S.menuItem()` to be injected to orderable document list menu
+                // pass from the structure callback params above
+                S,
+                context,
+            }),
+            S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
             S.documentTypeListItem("settings").title("Inställningar").icon(CogIcon),
+            S.divider(),
             S.divider(),
             S.listItem().title("Development")
             .child(
@@ -71,7 +90,6 @@ export const structure: StructureResolver = (S, context) =>
                     S.divider(),
                     S.documentTypeListItem("artist").title("Artists").icon(UsersIcon),
                     S.documentTypeListItem("venue").title("Venues").icon(PinIcon),
-                    S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
                 ])
             ),
         ])
