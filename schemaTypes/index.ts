@@ -8,6 +8,8 @@ import { updatesType } from "./updatesType";
 import { settingsType } from "./settingsType";
 import { galleryType } from "./galleryType";
 import { artistAlleyType } from "./artistAlleyType";
+import { nonprofitOrganizationType } from "./nonprofitOrganizationType";
+import { companiesType } from "./companiesTypes";
 
 export const schemaTypes = [
     eventType,
@@ -19,5 +21,7 @@ export const schemaTypes = [
     updatesType,
     settingsType,
     galleryType,
-    artistAlleyType
+    artistAlleyType,
+    nonprofitOrganizationType,
+    companiesType
 ];

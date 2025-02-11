@@ -1,5 +1,5 @@
 import type { StructureResolver } from "sanity/structure";
-import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon, CogIcon, DiamondIcon } from "@sanity/icons";
+import { CalendarIcon, UsersIcon, PinIcon, DocumentsIcon, HeartIcon, BellIcon, CogIcon, DiamondIcon, CaseIcon, ConfettiIcon, JoystickIcon } from "@sanity/icons";
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list';
 // import client from 'part:@sanity/base/client';
 
@@ -25,7 +25,6 @@ export const structure: StructureResolver = (S, context) =>
                 S,
                 context,
             }),
-            // S.documentTypeListItem("updates").title("Uppdateringar").icon(BellIcon),
             orderableDocumentListDeskItem({
                 type: 'updates',
                 title: 'Uppdateringar',
@@ -35,21 +34,13 @@ export const structure: StructureResolver = (S, context) =>
                 S,
                 context,
             }),
-            // S.documentTypeListItem("gallery").title("Bilder").icon(PinIcon),
+            S.divider(),
             orderableDocumentListDeskItem({
                 type: 'sponsor',
                 title: 'Sponsorer',
                 icon: HeartIcon,
-                // Required if using multiple lists of the same 'type'
-                // id: 'orderable-en-projects',
-                // See notes on adding a `filter` below
-                // filter: `__i18n_lang == $lang`,
-                // params: {
-                //   lang: 'en_US',
-                // },
-                createIntent: true, // do not add an option for item creation
-                menuItems: [], // allow an array of `S.menuItem()` to be injected to orderable document list menu
-                // pass from the structure callback params above
+                createIntent: true,
+                menuItems: [],
                 S,
                 context,
             }),
@@ -57,26 +48,36 @@ export const structure: StructureResolver = (S, context) =>
                 type: 'artistAlley',
                 title: 'Artist Alley',
                 icon: DiamondIcon,
-                // Required if using multiple lists of the same 'type'
-                // id: 'orderable-en-projects',
-                // See notes on adding a `filter` below
-                // filter: `__i18n_lang == $lang`,
-                // params: {
-                //   lang: 'en_US',
-                // },
-                createIntent: true, // do not add an option for item creation
-                menuItems: [], // allow an array of `S.menuItem()` to be injected to orderable document list menu
-                // pass from the structure callback params above
+                createIntent: true,
+                menuItems: [], 
                 S,
                 context,
             }),
-            S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
+            orderableDocumentListDeskItem({
+                type: 'nonprofitOrganization',
+                title: 'Föreningar',
+                icon: JoystickIcon,
+                createIntent: true,
+                menuItems: [], 
+                S,
+                context,
+            }),
+            orderableDocumentListDeskItem({
+                type: 'companies',
+                title: 'Företag',
+                icon: ConfettiIcon,
+                createIntent: true,
+                menuItems: [], 
+                S,
+                context,
+            }),
             S.documentTypeListItem("settings").title("Inställningar").icon(CogIcon),
             S.divider(),
             S.divider(),
             S.listItem().title("Development")
             .child(
                 S.list().title("Dev stuff").items([
+                    S.documentTypeListItem("location").title("Lokaler").icon(PinIcon),
                     S.listItem()
                         .title('Upcoming Events')
                         .schemaType('event')

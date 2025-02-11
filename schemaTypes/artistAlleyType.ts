@@ -1,6 +1,5 @@
 import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 import {defineField, defineType} from 'sanity'
-import { GetSlugSource } from './components/GetSlugSource'
 
 export const artistAlleyType = defineType({
     name: 'artistAlley',
@@ -28,9 +27,16 @@ export const artistAlleyType = defineType({
             type: 'string',
         }),
         defineField({
-            name: 'link',
-            title: 'Artistens sida',
-            type: 'url',
+            name: 'links',
+            title: 'Artistens sidor',
+            type: 'array',
+            of: [
+                defineField({
+                    name: 'link',
+                    title: 'Länk',
+                    type: 'url'
+                }),
+            ]
         }),
         defineField({
             name: 'description',
