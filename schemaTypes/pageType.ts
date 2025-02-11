@@ -86,17 +86,22 @@ export const pageType = defineType({
         }),
         defineField({
             name: 'pageBuilder',
-            title: 'Artist Alley',
+            title: 'Deltagar kort',
             type: 'array',
             of: [
                 {
                     type: 'reference',
                     to: [
-                        {type: 'artistAlley'}
+                        {type: 'artistAlley'},
+                        {type: 'nonprofitOrganization'},
+                        {type: 'companies'}
                         // etc...
                     ]
                 }
             ],
+            options: {
+                sortable: true,
+            },
         }),
         {
             name: 'imagesBottom',
